@@ -17,3 +17,8 @@
     -o, --output [path]        编译输出路径
     -s, --output-style [type]  编译形式 compressed|compact|nested|expanded 默认 compressed
     -h, --help                 帮助信息
+
+
+#### 使用实例
+
+    sass -e sass/ -o css/ -s compact
