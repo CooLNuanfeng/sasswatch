@@ -1,6 +1,6 @@
 {
   "name": "sasswatch",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "sass 编译工具",
   "main": "index.js",
   "bin": {
