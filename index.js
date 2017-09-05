@@ -4,8 +4,11 @@ var gulp = require('gulp');
 var postcss = require('gulp-postcss');
 var sass = require('gulp-sass');
 var chalk = require('chalk');
+var path = require('path');
 
 var autoprefixer = require('autoprefixer');
+
+var browser;
 
 const config = {
     'l2v' : 'last 2 versions',
@@ -49,13 +52,11 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-
+program.browsers && config[program.browsers] ? browser = [config[program.browsers]] : browser = ['>= 5%'];
+console.log(chalk.green('browserslist: ' + browser));
 gulp.task('sass',function(){
-    var browser;
-    program.browsers && config[program.browsers] ? browser = [config[program.browsers]] : browser = ['>= 5%'];
-    console.log(chalk.green('browserslist: ' + browser));
     var processors = [autoprefixer({browsers:browser})];
-    return gulp.src(program.entry+'*.scss')
+    return gulp.src(path.join(program.entry,'/')+'*.scss')
            .pipe(sass({outputStyle:program.outputStyle}).on('error',sass.logError))
            .pipe(postcss(processors))
            .pipe(gulp.dest(program.output));
@@ -64,7 +65,7 @@ gulp.task('sass',function(){
 gulp.task('default',['sass']);
 gulp.start();
 console.log(chalk.green('Success! sass watching...'));
-var watcher = gulp.watch(program.entry+'*.scss',['sass']);
+var watcher = gulp.watch(path.join(program.entry,'/')+'*.scss',['sass']);
 watcher.on('change',function(event){
     console.log(chalk.green('Success! go on tasking...'))
 });
